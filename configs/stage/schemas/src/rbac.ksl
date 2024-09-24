@@ -23,7 +23,7 @@ internal type group {
 internal type role {}
 
 internal type role_binding { // TODO: revisit cardinality based on clamping decisions
-    relation subject: [Any user or group.member]
+    relation subject: [ExactlyOne user or group.member]
     relation granted: [Any role]
 }
 
