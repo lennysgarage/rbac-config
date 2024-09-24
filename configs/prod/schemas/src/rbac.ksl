@@ -17,7 +17,7 @@ internal type tenant {
 
 internal type group {
     relation owner: [ExactlyOne tenant]
-    relation member: [Any user or group.member]
+    relation memberaaa: [Any user or group.member]
 }
 
 internal type role {}
