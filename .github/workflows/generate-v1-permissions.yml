@@ -16,5 +16,7 @@ jobs:
         with:
           ksl_src: configs/stage/schemas/src
           rbac_permissions: configs/stage/permissions
+      # commit update v1 permissions.
+      - uses: stefanzweifel/git-auto-commit-action@v5
 
 
