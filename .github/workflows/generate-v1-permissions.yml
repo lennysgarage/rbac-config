@@ -10,10 +10,11 @@ jobs:
     name: Generate V1-Only Permissions Data
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.7
       - name: Run Generate V1-Only Permissions Data
         uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
         with:
-          ksl_src: '${{ github.workspace }}/configs/stage/schemas/src'
-          rbac_permissions: '${{ github.workspace }}/configs/stage/permissions'
+          ksl_src: configs/stage/schemas/src
+          rbac_permissions: configs/stage/permissions
 
 
