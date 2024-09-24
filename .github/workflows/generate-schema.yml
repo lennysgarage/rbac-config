@@ -5,10 +5,10 @@ on:
 permissions:
   contents: read
   contents: write
-name: Schema generation
+name: Schema generation & validation
 jobs:
   generate_schema:
-    name: Generate Schema
+    name: Generate & Validate Schema
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.7
