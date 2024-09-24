@@ -3,8 +3,7 @@ on:
     branches:
       - master
 permissions:
-  contents: read
-  contents: write
+  contents: read|write
 name: Schema generation & validation
 jobs:
   generate_schema:
