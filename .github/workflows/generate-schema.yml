@@ -72,8 +72,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-          gh release create ${{ env.NOW }} --title "Schema Update" --notes "New generated schema" --draft
+          echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+          gh release create ${{ env.NOW }} --title "Automated Schema Update" --notes "New generated schema" --draft
 
       - name: Upload Generated Schema
         env:
