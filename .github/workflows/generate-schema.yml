@@ -19,6 +19,19 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      # generate ksil json file
+      - name: Run Generate V1-Only Permissions Data for stage
+        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
+        with:
+          ksl_src: configs/stage/schemas/src
+          rbac_permissions: configs/stage/permissions
+
+      - name: Run Generate V1-Only Permissions Data for prod
+        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
+        with:
+          ksl_src: configs/prod/schemas/src
+          rbac_permissions: configs/prod/permissions
+
       # generate schemas
       - name: Clone ksl-schema-language repo
         run: git clone --depth=1 https://github.com/project-kessel/ksl-schema-language.git
@@ -36,22 +49,6 @@ jobs:
           go build -gcflags "all=-N -l" -o ./bin/ ./...
           cd ..
 
-      # generate ksil json file
-      - name: Run Generate V1-Only Permissions Data for stage
-        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
-        with:
-          ksl_src: configs/stage/schemas/src
-          rbac_permissions: configs/stage/permissions
-
-      - name: Run Generate V1-Only Permissions Data for prod
-        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
-        with:
-          ksl_src: configs/prod/schemas/src
-          rbac_permissions: configs/prod/permissions
-
-      # commit json ?
-      - uses: stefanzweifel/git-auto-commit-action@v5
-            
       - name: Run KSL compiler
         run: |
           ./ksl-schema-language/bin/ksl -o configs/stage/schemas/schema.zed configs/stage/schemas/src/*.ksl configs/stage/schemas/src/*.json
