@@ -2,6 +2,11 @@ on:
   pull_request:
     branches:
       - master
+    paths:
+      - configs/stage/schemas/src/**
+      - configs/stage/permissions/**
+      - configs/prod/schemas/src/**
+      - configs/prod/permissions/**
 permissions:
   contents: write
 name: Schema generation & validation
@@ -30,14 +35,30 @@ jobs:
           mkdir -p bin/
           go build -gcflags "all=-N -l" -o ./bin/ ./...
           cd ..
+
+      # generate ksil json file
+      - name: Run Generate V1-Only Permissions Data for stage
+        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
+        with:
+          ksl_src: configs/stage/schemas/src
+          rbac_permissions: configs/stage/permissions
+
+      - name: Run Generate V1-Only Permissions Data for prod
+        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
+        with:
+          ksl_src: configs/prod/schemas/src
+          rbac_permissions: configs/prod/permissions
             
       - name: Run KSL compiler
         run: |
           ./ksl-schema-language/bin/ksl -o configs/stage/schemas/schema.zed configs/stage/schemas/src/*.ksl configs/stage/schemas/src/*.json
           ./ksl-schema-language/bin/ksl -o configs/prod/schemas/schema.zed configs/prod/schemas/src/*.ksl configs/prod/schemas/src/*.json
-      
-      - name: Remove KSL repo
-        run: rm -rf ksl-schema-language/
+
+      - name: Remove KSL repo & ksil files
+        run: |
+          rm -rf ksl-schema-language/
+          rm configs/stage/schemas/src/rbac_v1_permissions.json
+          rm configs/prod/schemas/src/rbac_v1_permissions.json
 
       # commit changed schema back to PR.
       - uses: stefanzweifel/git-auto-commit-action@v5
