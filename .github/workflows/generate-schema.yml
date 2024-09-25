@@ -76,7 +76,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create ${{ env.NOW }} --title "Automated Schema Update" --notes "New generated schema" --draft
+          echo "RELEASE_URL=$(gh release view ${{ env.NOW }} --json url -q .url)" >> $GITHUB_ENV
       - name: Upload Generated Schema
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload ${{ env.NOW }} configs/stage/schemas/schema.zed
+        run: |
+          gh release upload ${{ env.NOW }} configs/stage/schemas/schema.zed
+          gh pr comment ${{ github.event.number }} --body "A new draft release has been created: ${{ env.RELEASE_URL }}"
