@@ -69,9 +69,13 @@ jobs:
           validationfile: "configs/prod/schemas/schema.zed"
 
       - name: Create Release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
           gh release create --draft $NOW --title "Schema Update" --notes "New generated schema"
 
       - name: Upload Generated Schema
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh release upload $NOW configs/stage/schemas/schema.zed
