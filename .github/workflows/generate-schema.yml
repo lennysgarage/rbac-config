@@ -23,13 +23,13 @@ jobs:
       - name: Run Generate V1-Only Permissions Data for stage
         uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
         with:
-          ksl: configs/stage/schemas
+          ksl_src: configs/stage/schemas
           rbac_permissions: configs/stage/permissions
 
       - name: Run Generate V1-Only Permissions Data for prod
         uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
         with:
-          ksl: configs/prod/schemas
+          ksl_src: configs/prod/schemas
           rbac_permissions: configs/prod/permissions
 
       # generate schemas
