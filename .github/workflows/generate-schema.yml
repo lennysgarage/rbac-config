@@ -55,8 +55,6 @@ jobs:
       - name: Remove KSL repo & ksil files
         run: |
           rm -rf ksl-schema-language/
-          rm configs/stage/schemas/src/rbac_v1_permissions.json
-          rm configs/prod/schemas/src/rbac_v1_permissions.json
 
       # validate generated schemas
       - name: Validate Stage Schema
