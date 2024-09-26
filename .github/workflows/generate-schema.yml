@@ -18,17 +18,17 @@ jobs:
       - uses: actions/checkout@v4.1.7
 
       # generate ksil json file
-      - name: Run Generate V1-Only Permissions Data for stage
-        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
-        with:
-          ksl_src: configs/stage/schemas/src
-          rbac_permissions: configs/stage/permissions
+      # - name: Run Generate V1-Only Permissions Data for stage
+      #   uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
+      #   with:
+      #     ksl_src: configs/stage/schemas/src
+      #     rbac_permissions: configs/stage/permissions
 
-      - name: Run Generate V1-Only Permissions Data for prod
-        uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
-        with:
-          ksl_src: configs/prod/schemas/src
-          rbac_permissions: configs/prod/permissions
+      # - name: Run Generate V1-Only Permissions Data for prod
+      #   uses: wscalf/rbac-config-actions/generate-v1-only-permissions@add-generate-v1-only-permissions-action
+      #   with:
+      #     ksl_src: configs/prod/schemas/src
+      #     rbac_permissions: configs/prod/permissions
 
       # generate schemas
       - name: Clone ksl-schema-language repo
@@ -68,18 +68,22 @@ jobs:
         with:
           validationfile: "configs/prod/schemas/schema.zed"
 
+      # commit changed schema back to PR.
+      - uses: stefanzweifel/git-auto-commit-action@v5
+
+
       # Create release
-      - name: Set Date
-        run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-      - name: Create Release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release create ${{ env.NOW }} --title "Automated Schema Update" --notes "New generated schema" --draft
-          echo "RELEASE_URL=$(gh release view ${{ env.NOW }} --json url -q .url)" >> $GITHUB_ENV
-      - name: Upload Generated Schema
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release upload ${{ env.NOW }} configs/stage/schemas/schema.zed
-          gh pr comment ${{ github.event.number }} --body "A new draft release has been created: ${{ env.RELEASE_URL }}"
+      # - name: Set Date
+      #   run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV # update this so it doesn't have a cache conflict.
+      # - name: Create Release
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #   run: |
+      #     gh release create ${{ env.NOW }} --title "Automated Schema Update" --notes "New generated schema" --draft
+      #     echo "RELEASE_URL=$(gh release view ${{ env.NOW }} --json url -q .url)" >> $GITHUB_ENV
+      # - name: Upload Generated Schema
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #   run: |
+      #     gh release upload ${{ env.NOW }} configs/stage/schemas/schema.zed
+      #     gh pr comment ${{ github.event.number }} --body "A new draft release has been created: ${{ env.RELEASE_URL }}"
