@@ -68,6 +68,8 @@ jobs:
 
       # commit changed schema back to PR.
       - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_user_name: Testy-github-actions-bot
 
 
       # Create release
