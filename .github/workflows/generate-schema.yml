@@ -7,6 +7,8 @@ on:
       - configs/stage/permissions/**
       - configs/prod/schemas/src/**
       - configs/prod/permissions/**
+      - configs/stage/schemas/schema.zed
+      - configs/prod/schemas/schema.zed
 permissions:
   contents: write
 name: Schema generation & validation
@@ -68,9 +70,6 @@ jobs:
 
       # commit changed schema back to PR.
       - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_user_name: Testy-github-actions-bot
-
 
       # Create release
       # - name: Set Date
