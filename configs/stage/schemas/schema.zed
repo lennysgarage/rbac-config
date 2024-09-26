@@ -1,15 +1,3 @@
-definition notifications/integration {
-	permission disable = t_workspace->notifications_integration_disable
-	permission enable = t_workspace->notifications_integration_enable
-	permission workspace = t_workspace
-	relation t_workspace: rbac/workspace
-	permission view = t_workspace->notifications_integration_view
-	permission edit = t_workspace->notifications_integration_edit
-	permission test = t_workspace->notifications_integration_test
-	permission view_history = t_workspace->notifications_integration_view_history
-	permission delete = t_workspace->notifications_integration_delete
-}
-
 definition rbac/realm {
 	permission notifications_integration_subscribe_email = t_user_grant->notifications_integration_subscribe_email
 	permission notifications_integration_test = t_user_grant->notifications_integration_test
