@@ -666,7 +666,7 @@ objects:
             "system": true,
             "platform_default": false,
             "admin_default": true,
-            "version": 10,
+            "version": 11,
             "access": [
               {
                 "permission": "patch:*:*"
