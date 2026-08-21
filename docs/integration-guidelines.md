@@ -139,7 +139,7 @@ Runs on push to `master`:
 
 ### Schema Sync Pipeline (`.github/workflows/schema-sync.yml`)
 
-Detects new [starlark-unified-schema](https://github.com/project-kessel/starlark-unified-schema) GitHub Releases and opens a PR that pins `SCHEMA_VERSION` and overlays KSIL JSON into `configs/stage/schemas/src/` only. Runs daily and via `workflow_dispatch` (optional `tag` input for a specific release or rollback). Uses `make update-schemas`. Does not regenerate `schema.zed` — that remains the master workflow's job after merge. Prod KSIL is a later copy of named JSON (e.g. `features.json`) when an SP is ready; live clusters still follow Tuesday/Thursday app-interface `ref` bumps.
+Detects new [starlark-unified-schema](https://github.com/project-kessel/starlark-unified-schema) GitHub Releases and opens a PR that pins `KSIL_SCHEMA_VERSION` and overlays KSIL JSON into `configs/stage/schemas/src/` only. Runs daily and via `workflow_dispatch` (optional `tag` input for a specific release or rollback). Uses `make update-schemas`. Does not regenerate `schema.zed` — that remains the master workflow's job after merge. Prod KSIL is a later copy of named JSON (e.g. `features.json`) when an SP is ready; live clusters still follow Tuesday/Thursday app-interface `ref` bumps.
 
 ### External Actions Used
 
@@ -168,7 +168,7 @@ Run `make init` to install Go-based tools (`ksl` and `generate-v1-only-permissio
 To pull a starlark-unified-schema KSIL release into stage (requires the `gh` CLI):
 
 ```sh
-make update-schemas SCHEMA_VERSION=vYYYYMMDD.N
+make update-schemas KSIL_SCHEMA_VERSION=vYYYYMMDD.N
 # Optional: SCHEMA_REPO=owner/repo to download from a fork
 ```
 

@@ -6,7 +6,7 @@ endif
 GOBIN := $(shell go env GOPATH)/bin
 
 SCHEMA_REPO ?= project-kessel/starlark-unified-schema
-SCHEMA_VERSION=unset
+KSIL_SCHEMA_VERSION=unset
 
 .PHONY: init check-go-tools ksl-schema-stage ksl-test-schema-stage ksl-schema-prod ksl-test-schema-prod update-schemas
 
@@ -61,8 +61,8 @@ ksl-test-schema-prod: configs/prod/schemas/src/*.ksl configs/prod/schemas/src/rb
 # are not overwritten. Does not compile KSL or regenerate schema.zed.
 # Prod is a later copy of named JSON (e.g. features.json) when an SP is ready.
 update-schemas:
-	@test -n "$(SCHEMA_VERSION)" || { echo "SCHEMA_VERSION is required"; exit 1; }
-	gh release download "$(SCHEMA_VERSION)" \
+	@test -n "$(KSIL_SCHEMA_VERSION)" || { echo "KSIL_SCHEMA_VERSION is required"; exit 1; }
+	gh release download "$(KSIL_SCHEMA_VERSION)" \
 		--repo "$(SCHEMA_REPO)" \
 		--pattern 'ksl.tar.gz' \
 		--clobber
